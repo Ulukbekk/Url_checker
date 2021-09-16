@@ -21,10 +21,10 @@ def url_add_view(request):
         link = str('http://www.') + request.POST.get('link')
         user = request.user
         account = Account.objects.filter(username=user).first()
-        r = get_status_code(link)
+        status = get_status_code(link)
         url = Url.objects.create(
             link=link,
-            status=r,
+            status=status,
             account=account
         )
     return HttpResponse(url, status=status.HTTP_200_OK)
@@ -36,13 +36,4 @@ class ListUrlsAPIView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
 
 
-def chek():
-    urls = Url.objects.all()
-    for url in urls:
-        new_status_code = get_status_code(url.link)
-        url.status = new_status_code
-        url.save()
 
-
-
-chek()
