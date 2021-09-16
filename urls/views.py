@@ -21,10 +21,10 @@ def url_add_view(request):
         link = str('http://www.') + request.POST.get('link')
         user = request.user
         account = Account.objects.filter(username=user).first()
-        status = get_status_code(link)
+        r = get_status_code(link)
         url = Url.objects.create(
             link=link,
-            status=status,
+            status=r,
             account=account
         )
     return HttpResponse(url, status=status.HTTP_200_OK)
